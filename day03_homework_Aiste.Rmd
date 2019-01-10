@@ -1,0 +1,47 @@
+---
+title: "Day 3 Homework"
+output: html_document
+---
+
+1. Identify a numeric column in your data. Find the 95th %ile value of that column.
+
+```{r}
+
+
+SumScores <-read.csv("aistedata/SummaryScoreSheet_R_Class.csv") 
+summary(SumScores$AQ_Total)
+
+
+AQ_T.95 <- quantile(SumScores$AQ_Total, .95, na.rm = TRUE)
+AQ_T.95  #95% is 39
+
+
+
+```
+
+2. Subset your data to be only include values greater than that extreme 95th %ile
+
+```{r}
+SumScores.sub1 <- SumScores[SumScores$AQ_Total > AQ_T.95, ]
+SumScores.sub1
+
+```
+
+3. Now find the lowest 5th %ile, and subset to the data that includes both the lower extremes and upper extremes
+
+```{r}
+AQ_T.05 <- quantile(SumScores$AQ_Total, .05, na.rm = TRUE)
+AQ_T.05  #5% is 4
+
+SumScores.sub2 <- SumScores[SumScores$AQ_Total > AQ_T.05, "AQ_Total" ]
+SumScores.sub2
+
+
+SumScore.extremes <- c(SumScores.sub1, SumScores.sub2)
+SumScore.extremes
+
+#####Better answer
+SumScore.extremes <- SumScores[SumScores$AQ_Total > AQ_T.95 & SumScores$AQ_Total > AQ_T.05, "AQ_Total"]
+SumScore.extremes
+```
+
